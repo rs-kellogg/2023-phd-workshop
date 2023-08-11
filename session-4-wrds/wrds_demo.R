@@ -5,6 +5,19 @@ startyr <- 2002
 endyr   <- 2011 
 outdir  <- "/kellogg/proj/jpj8711/crsp_dsf"
 
+# Test for existence of outdir before attempting to write
+if (!dir.exists(outdir)) {
+  dir.create(outdir)
+}
+
+# If necessary, create an activity log file
+logfile = paste(outdir,"/activity_log.txt",sep="")
+if (!file.exists(logfile)){
+  fileConn <- file(logfile)
+  writeLines("Date|Filepath|Year|nrows", fileConn)
+  close(fileConn)
+}
+
 # Create a connection called "wrds"
 wrds <- dbConnect(Postgres(),
                   host='wrds-pgdata.wharton.upenn.edu',
@@ -31,13 +44,16 @@ download_dsf <- function(year, outdir) {
   outfile = paste("dsf",year,Sys.Date(),sep="_")
   outpath = paste(outdir, "/", sep="") 
   outpath = paste(outpath, outfile, ".csv", sep="")
-
-  # Test for existence of outdir before attempting to write
-  if (!dir.exists(outdir)) {
-    dir.create(outdir)
-  }
   
+  # Write "data" dataframe to external file
   write.csv(data, outpath, row.names=TRUE)
+  
+  # Write to activity log also
+  fileConn <- file(logfile)
+  stringout = ""
+  stringout = paste(Sys.Date(),outpath|year|nrows(data),sep="|")
+  writeLines("stringout", fileConn)
+  close(fileConn)
 } #end download_dsf
 
 
@@ -59,15 +75,20 @@ download_dsfenhanced <- function(year, outdir) {
   outpath = paste(outdir, "/", sep="") 
   outpath = paste(outpath, outfile, ".csv", sep="")
   
-  # Test for existence of outdir before attempting to write
-  if (!dir.exists(outdir)) {
-    dir.create(outdir)
-  }
-  
+  # Write "data" dataframe to external file
   write.csv(data, outpath, row.names=TRUE)
+  
+  # Write to activity log also
+  fileConn <- file(logfile)
+  stringout = ""
+  stringout = paste(Sys.Date(),outpath|year|nrows(data),sep="|")
+  writeLines("stringout", fileConn)
+  close(fileConn)
+  
 } #end download_dsfenhanced
 
-# Call the functions
+
+# Call the download functions
 for (i in startyr:endyr) {
   download_dsf(i, outdir)
 }
