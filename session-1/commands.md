@@ -1,10 +1,14 @@
-# Graphical Tools
+# KLC Software
 
 ## Quest Analytics Nodes
 
 [Quest documentation](https://www.it.northwestern.edu/departments/it-services-support/research/computing/quest/)
 
-## Software modules 
+## FastX Bookmarks
+
+[FastX Browswe](https://www.kellogg.northwestern.edu/research-support/computing/kellogg-linux-cluster/connect.aspx)
+
+## Modules 
 
 [Module documentation](https://www.it.northwestern.edu/departments/it-services-support/research/computing/quest-software-and-applications.html)
 
@@ -22,7 +26,7 @@ module use --append /kellogg/software/Modules/modulefiles
 module avail miniconda
 ```
 
-### Software available through modules:
+### Using Python/R/Stata with modules:
 
 - Stata: ```module load stata/17```
     ```bash
