@@ -112,6 +112,4 @@ venv.bak/
 **/*~
 temp/
 tmp/
-tests/data/
-wrangler/data/config.yml
-projects/crunchbase/data/
+Resources/
