@@ -19,6 +19,7 @@ module load git/2.37.2
 
 ```bash
 module use --append /kellogg/software/Modules/modulefiles
+module avail miniconda
 ```
 
 ### Software available through modules:
