@@ -114,3 +114,4 @@ temp/
 tmp/
 Resources/
 **/~*
+**/.Rhistory
