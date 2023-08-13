@@ -1,4 +1,4 @@
-# Graphical commands
+# Graphical Tools
 
 ## Quest Analytics Nodes
 
@@ -8,26 +8,42 @@
 
 [Module documentation](https://www.it.northwestern.edu/departments/it-services-support/research/computing/quest-software-and-applications.html)
 
-Example: load git module:
+### Example: load git module:
 
 ```bash
 module avail git
 module load git/2.37.2
 ```
 
-Graphical tools available through modules:
+### Additional KLC modules:
 
-- Stata: 
+```bash
+module use --append /kellogg/software/Modules/modulefiles
+```
+
+### Software available through modules:
+
+- Stata: ```module load stata/17```
     ```bash
-    module load stata/17; xstata-mp
+    module load stata/17; xstata-mp # graphical
     ```
+    ```bash
+    module load stata/17; stata # command line
+    ```
+    
 - Python: 
     ```bash
-    module load vscode/1.74.1; code
+    module load vscode/1.74.1; code # graphical
+    ```
+    ```bash
+    miniconda/23.3.1; python # command line
     ```
 - R: 
     ```bash
-    module load R/4.3.0; rstudio
+    module load R/4.3.0; rstudio # graphical
+    ```
+    ```bash
+    module load R/4.3.0; R # command line
     ```
 
 ## Juypyter Notebooks
