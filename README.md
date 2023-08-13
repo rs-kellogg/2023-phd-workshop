@@ -1,1 +1,1 @@
-# 2023-phd-workshop
+# 2023 PhD Workshop
