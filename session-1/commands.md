@@ -1,9 +1,16 @@
 # Graphical commands
 
-## Common modules 
-module use --append /kellogg/software/Modules/modulefiles
-module load git/2.37.2
+## Quest Analytics Nodes
 
+[Quest documentation](https://www.it.northwestern.edu/departments/it-services-support/research/computing/quest/)
+
+## Software modules 
+
+[Module documentation](https://www.it.northwestern.edu/departments/it-services-support/research/computing/quest-software-and-applications.html)
+
+```bash 
+module load git/2.37.2
+```
 
 - Stata: 
     ```bash module load stata/17; xstata-mp```
@@ -15,6 +22,7 @@ module load git/2.37.2
 ## Juypyter Notebooks
 
 ```bash
+module use --append /kellogg/software/Modules/modulefiles
 module load miniconda/23.3.1
 jupyter lab --browser=firefox
 ```
