@@ -6,16 +6,15 @@ module load git/2.37.2
 
 
 - Stata: 
-    module load stata/17
-    xstata-mp
+    ```bash module load stata/17; xstata-mp```
 - Python: 
-    module load vscode/1.74.1
-    code
+    ```bash module load vscode/1.74.1; code```
 - R: 
-    module load R/4.3.0
-    rstudio
+    ```bash module load R/4.3.0; rstudio```
 
 ## Juypyter Notebooks
 
+```bash
 module load miniconda/23.3.1
 jupyter lab --browser=firefox
+```
