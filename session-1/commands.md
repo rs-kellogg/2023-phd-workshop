@@ -8,16 +8,27 @@
 
 [Module documentation](https://www.it.northwestern.edu/departments/it-services-support/research/computing/quest-software-and-applications.html)
 
-```bash 
+Example: load git module:
+
+```bash
+module avail git
 module load git/2.37.2
 ```
 
+Graphical tools available through modules:
+
 - Stata: 
-    ```bash module load stata/17; xstata-mp```
+    ```bash
+    module load stata/17; xstata-mp
+    ```
 - Python: 
-    ```bash module load vscode/1.74.1; code```
+    ```bash
+    module load vscode/1.74.1; code
+    ```
 - R: 
-    ```bash module load R/4.3.0; rstudio```
+    ```bash
+    module load R/4.3.0; rstudio
+    ```
 
 ## Juypyter Notebooks
 
