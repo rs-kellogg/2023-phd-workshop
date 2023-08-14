@@ -1,5 +1,5 @@
 ```bash
-conda env create -n openai-env2 -f environment.yml
+conda env create -n openai-env -f environment.yml
 ```
 
 ```bash
