@@ -1,11 +1,10 @@
-name: openai-env
 channels:
   - defaults
+  - conda-forge
 dependencies:
   - python[version='<=3.11']
-  - tqdm
-  - pandas
-  - openai
-  - typer
-  - tiktoken
-prefix: /opt/homebrew/Caskroom/miniconda/base/envs/openai-env
+  - tqdm==4.65.0
+  - pandas==1.5.3
+  - openai==0.27.8
+  - typer==0.9.0
+  - tiktoken==0.3.3
