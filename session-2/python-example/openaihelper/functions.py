@@ -20,7 +20,7 @@ def completion_with_backoff(**kwargs):
     return openai.ChatCompletion.create(**kwargs)
 
 
-def chat_complete(text: str):
+def chat_complete(text: str, model_name: str, prompt: str):
     try:
         return completion_with_backoff(
             model=model_name,

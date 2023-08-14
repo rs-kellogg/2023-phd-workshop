@@ -58,7 +58,7 @@ def process(
         if counts[i] > max_token_len:
             responses.append("TOO_LONG")
         else:
-            responses.append(str(F.chat_complete(texts[i])))
+            responses.append(str(F.chat_complete(texts[i], model_name=model_name, prompt=prompt)))
         logging.info(f"{indices[i]}: {responses[i]}")
     df["responses"] = responses
     df.to_csv(f"{outdir}/{data_file}_responses.csv", quoting=csv.QUOTE_ALL)
