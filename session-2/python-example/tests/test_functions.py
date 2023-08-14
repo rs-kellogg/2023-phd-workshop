@@ -43,10 +43,23 @@ def test_count_tokens(config, sample_100):
     "not config.getoption('--use-api')",
     reason="Only run when --use-api is given",
 )
-def test_chat_complete_success(config, sample_1):
+def test_chat_complete_success(config, sample_100):
     prompt = config['prompt']
     model_name = config['model_name']
-    text = list(sample_1['text'])[0]
+    text = list(sample_100['text'])[0]
     response = F.chat_complete(text, model_name, prompt)
     assert type(response) == openai.openai_object.OpenAIObject
     print(str(response))
+
+
+@pytest.mark.skipif(
+    "not config.getoption('--use-api')",
+    reason="Only run when --use-api is given",
+)
+def test_chat_complete_failure(config, sample_100):
+    prompt = config['prompt']
+    model_name = config['model_name']
+    text = list(sample_100['text'])[99]
+    response = F.chat_complete(text, model_name, prompt)
+    assert type(response) == str
+    print(response)
