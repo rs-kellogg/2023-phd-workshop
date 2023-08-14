@@ -1,0 +1,5 @@
+prompt: "Read through the newspaper text and identify the following: environmental movement organization (EMO) involved, action taken by EMO, target of the action, which of the following strategies is being used- verbal statements, political tactic, education/raising awareness, juridicial tactics, disruptive protests, lifestyle/culture tactics, direct environmental protection, nondisruptive protest, and affecting business-, whether it is collaborative or contentious action, and where the event/interaction is happening. Answer in the following format. EMO: ; action: ; target: ; strategy: ; collaborative/contentious: ; city: ; county: ; state: . If the article is an advertisement, editorial, or opinions, or if it reports multiple unrelated events or non-local, international ones, return NA and specify why. Newspaper text: "
+
+max_token_len: 4097
+model_name: "gpt-3.5-turbo"
+encoding_name: "cl100k_base"
