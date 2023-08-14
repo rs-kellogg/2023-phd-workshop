@@ -3,4 +3,4 @@ prompt: "Read through the newspaper text and identify the following: environment
 max_token_len: 4097
 model_name: "gpt-3.5-turbo"
 encoding_name: "cl100k_base"
-openai_api_key_file: "openai-key.txt"
+openai_api_key_file: "/Users/williamthompson/.openai/openai-key.txt"
