@@ -8,3 +8,4 @@ dependencies:
   - openai==0.27.8
   - typer==0.9.0
   - tiktoken==0.3.3
+  - numpy==1.24.3
