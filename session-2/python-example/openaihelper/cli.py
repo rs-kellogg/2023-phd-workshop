@@ -20,7 +20,7 @@ app = typer.Typer()
 
 
 logging.basicConfig(
-    filename="openai-response.log", encoding="utf-8", level=logging.INFO
+    filename="openai-helper.log", encoding="utf-8", level=logging.INFO
 )
 model_name = "gpt-3.5-turbo"
 encoding_name = "cl100k_base"
