@@ -17,9 +17,6 @@ from typing import Dict
 from openaihelper import functions as F
 
 
-app = typer.Typer()
-
-
 logging.basicConfig(filename="openai-helper.log", encoding="utf-8", level=logging.INFO)
 
 
@@ -32,6 +29,9 @@ def check_args(
     assert config_file_path.exists()
     if not outdir.exists():
         outdir.mkdir(parents=True)
+
+
+app = typer.Typer()
 
 
 @app.command()
