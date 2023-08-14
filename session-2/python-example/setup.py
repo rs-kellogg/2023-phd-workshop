@@ -2,11 +2,6 @@
 
 from setuptools import setup, find_packages
 
-requirements = (
-    [
-        "typer[all]",
-    ],
-)
 setup(
     author="Will Thompson",
     author_email="wkt@northwestern.edu",
@@ -14,14 +9,13 @@ setup(
     description="OpenAI helper code.",
     entry_points={
         "console_scripts": [
-            "openai=openai.cli:app",
+            "openaihelper=openaihelper.cli:app",
         ],
     },
-    install_requires=requirements,
     include_package_data=True,
     keywords="OpenAI",
-    name="openai_helper",
-    packages=find_packages(include=["openai", "openai.*"]),
-    package_data={"openai": ["data/*"]},
+    name="openaihelper",
+    packages=find_packages(include=["openaihelper", "openaihelper.*"]),
+    package_data={"openaihelper": ["data/*"]},
     version="0.1.0",
 )
