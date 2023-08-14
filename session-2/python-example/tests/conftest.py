@@ -28,14 +28,14 @@ def config() -> Dict:
 
 @pytest.fixture(scope="session")
 def openai_api_key(config) -> str:
-    return (dir_path/config['openai_api_key_file']).read_text()
+    return (dir_path / config["openai_api_key_file"]).read_text()
 
 
 @pytest.fixture(scope="session")
 def sample_1() -> pd.DataFrame:
-    return pd.read_csv(dir_path/"sample-1.csv")
+    return pd.read_csv(dir_path / "sample-1.csv")
 
 
 @pytest.fixture(scope="session")
 def sample_100() -> pd.DataFrame:
-    return pd.read_csv(dir_path/"sample-100.csv")
+    return pd.read_csv(dir_path / "sample-100.csv")

@@ -2,16 +2,20 @@ from pathlib import Path
 from tqdm import tqdm
 import pandas as pd
 import openai
-import time
-import csv
-import math
+import yaml
 import tiktoken
-import logging
+from typing import Dict
 from tenacity import (
     retry,
     stop_after_attempt,
     wait_random_exponential,
 )  # for exponential backoff
+
+
+def config(config_file: Path) -> Dict:
+    with open(config_file) as f:
+        conf = yaml.load(f, Loader=yaml.FullLoader)
+        return conf
 
 
 @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
