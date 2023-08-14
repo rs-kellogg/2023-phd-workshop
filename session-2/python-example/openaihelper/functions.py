@@ -4,7 +4,6 @@ import pandas as pd
 import openai
 import time
 import csv
-import typer
 import math
 import tiktoken
 import logging
