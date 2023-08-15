@@ -35,7 +35,7 @@ download_dsf <- function(year, outdir) {
   query = paste(query, "from crsp.dsf ", sep="")
   query = paste(query, "where date >= '", year, "-01-01' and ", sep="")
   query = paste(query, "date <= '", year, "-12-31'", sep="")
-  # query
+  query
 
   # Execute the select query
   res <- dbSendQuery(wrds, query)
@@ -49,11 +49,14 @@ download_dsf <- function(year, outdir) {
   write.csv(data, outpath, row.names=TRUE)
   
   # Write to activity log also
-  fileConn <- file(logfile)
+
   stringout = ""
-  stringout = paste(Sys.Date(),outpath|year|nrows(data),sep="|")
-  writeLines("stringout", fileConn)
-  close(fileConn)
+  stringout = paste(Sys.Date(),outpath,year,nrow(data),sep="|")
+  write(stringout,file=logfile,append=TRUE)
+  
+  # Clean up workspace
+  dbClearResult(res)
+
 } #end download_dsf
 
 
@@ -79,11 +82,12 @@ download_dsfenhanced <- function(year, outdir) {
   write.csv(data, outpath, row.names=TRUE)
   
   # Write to activity log also
-  fileConn <- file(logfile)
   stringout = ""
-  stringout = paste(Sys.Date(),outpath|year|nrows(data),sep="|")
-  writeLines("stringout", fileConn)
-  close(fileConn)
+  stringout = paste(Sys.Date(),outpath,year,nrow(data),sep="|")
+  write(stringout,file=logfile,append=TRUE)
+  
+  # Clean up workspace
+  dbClearResult(res)
   
 } #end download_dsfenhanced
 
@@ -95,5 +99,3 @@ for (i in startyr:endyr) {
 
 download_dsfenhanced(2020, outdir)
   
-# Clean up workspace
-dbClearResult(res)
