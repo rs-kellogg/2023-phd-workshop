@@ -9,7 +9,7 @@ from tenacity import (
     retry,
     stop_after_attempt,
     wait_random_exponential,
-)  # for exponential backoff
+)
 
 
 def config(config_file: Path) -> Dict:
@@ -19,11 +19,11 @@ def config(config_file: Path) -> Dict:
 
 
 @retry(wait=wait_random_exponential(min=1, max=60), stop=stop_after_attempt(6))
-def completion_with_backoff(**kwargs):
+def completion_with_backoff(**kwargs) -> str:
     return openai.ChatCompletion.create(**kwargs)
 
 
-def chat_complete(text: str, model_name: str, prompt: str):
+def chat_complete(text: str, model_name: str, prompt: str) -> str:
     assert text is not None and len(text) > 0
     assert model_name is not None and len(model_name) > 0
     assert prompt is not None and len(prompt) > 0
@@ -43,10 +43,10 @@ def chat_complete(text: str, model_name: str, prompt: str):
         return str(e)
 
 
-def count_tokens(text: str, encoding_name: str):
+def count_tokens(text: str, encoding_name: str) -> int:
     assert text is not None and len(text) > 0
     assert encoding_name is not None and len(encoding_name) > 0
-    
+
     encoding = tiktoken.get_encoding(encoding_name)
     num_tokens = len(encoding.encode(text))
     return num_tokens

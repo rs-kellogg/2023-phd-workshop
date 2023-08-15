@@ -32,6 +32,8 @@ def check_args(
 
 
 app = typer.Typer()
+if __name__ == "__main__":
+    app()
 
 
 @app.command()
@@ -58,7 +60,7 @@ def count_tokens(
     ids = list(df["id"])
 
     # Count tokens and write results to csv file
-    out_csv = open(f"{outdir}/{data_file_path.stem}_counts.csv", 'a')
+    out_csv = open(f"{outdir}/{data_file_path.stem}_counts.csv", "a")
     writer = csv.writer(out_csv)
     writer.writerow(["id", "count"])
     for i in tqdm(range(len(texts))):
@@ -98,7 +100,7 @@ def complete_prompt(
     ids = list(df["id"])
 
     # Complete prompt and write results to csv file
-    out_csv = open(f"{outdir}/{data_file_path.stem}_responses.csv", 'a')
+    out_csv = open(f"{outdir}/{data_file_path.stem}_responses.csv", "a")
     writer = csv.writer(out_csv)
     writer.writerow(["id", "response"])
     for i in tqdm(range(len(texts))):
@@ -107,12 +109,10 @@ def complete_prompt(
             writer.writerow([ids[i], "TOO_LONG"])
             logging.warn(f"Data point {ids[i]} not completed")
         else:
-            response = str(F.chat_complete(texts[i], model_name=model_name, prompt=prompt))
+            response = str(
+                F.chat_complete(texts[i], model_name=model_name, prompt=prompt)
+            )
             writer.writerow([ids[i], response])
             logging.info(f"Data point {ids[i]} completed")
         out_csv.flush()
     out_csv.close()
-
-
-if __name__ == "__main__":
-    app()
