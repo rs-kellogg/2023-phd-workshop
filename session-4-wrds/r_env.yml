@@ -1,0 +1,11 @@
+# Create r_env.yml
+# begin r_env.yml 
+name: r_test
+ 
+channels:
+  - r
+  - conda-forge
+dependencies:
+  - r-base = 4.1.1      
+  - r-rpostgres
+# end r_env.yml
