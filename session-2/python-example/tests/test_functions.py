@@ -49,7 +49,7 @@ def test_count_tokens(config, sample_100):
     "not config.getoption('--use-api')",
     reason="Only run when --use-api is given",
 )
-def test_chat_complete_success(config, sample_100):
+def test_chat_complete_success_mode(config, sample_100):
     prompt = config["prompt"]
     model_name = config["model_name"]
     text = list(sample_100["text"])[0]
@@ -62,7 +62,7 @@ def test_chat_complete_success(config, sample_100):
     "not config.getoption('--use-api')",
     reason="Only run when --use-api is given",
 )
-def test_chat_complete_failure(config, sample_100):
+def test_chat_complete_failure_mode(config, sample_100):
     prompt = config["prompt"]
     model_name = config["model_name"]
     text = list(sample_100["text"])[99]

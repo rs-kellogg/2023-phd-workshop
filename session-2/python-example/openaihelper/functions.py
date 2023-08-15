@@ -24,6 +24,10 @@ def completion_with_backoff(**kwargs):
 
 
 def chat_complete(text: str, model_name: str, prompt: str):
+    assert text is not None and len(text) > 0
+    assert model_name is not None and len(model_name) > 0
+    assert prompt is not None and len(prompt) > 0
+
     try:
         return completion_with_backoff(
             model=model_name,
@@ -40,6 +44,9 @@ def chat_complete(text: str, model_name: str, prompt: str):
 
 
 def count_tokens(text: str, encoding_name: str):
+    assert text is not None and len(text) > 0
+    assert encoding_name is not None and len(encoding_name) > 0
+    
     encoding = tiktoken.get_encoding(encoding_name)
     num_tokens = len(encoding.encode(text))
     return num_tokens

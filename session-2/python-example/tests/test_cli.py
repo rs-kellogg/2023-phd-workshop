@@ -17,4 +17,3 @@ def test_cli(tmpdir):
     )
     assert result.exit_code == 0
     assert result.stdout.count("processing file:") == 100
-

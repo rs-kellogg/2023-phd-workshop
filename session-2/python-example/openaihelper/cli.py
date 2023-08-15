@@ -55,20 +55,18 @@ def count_tokens(
     assert "id" in df.columns
     assert "text" in df.columns
     texts = list(df["text"])
+    ids = list(df["id"])
 
-    # Count tokens
-    out_df = df[["id"]].copy()
-    counts = []
+    # Count tokens and write results to csv file
+    out_csv = open(f"{outdir}/{data_file_path.stem}_counts.csv", 'a')
+    writer = csv.writer(out_csv)
+    writer.writerow(["id", "count"])
     for i in tqdm(range(len(texts))):
-        counts.append(F.count_tokens(texts[i], encoding_name))
-    out_df["count"] = counts
-
-    # Write output
-    out_df.to_csv(
-        f"{outdir}/{data_file_path.stem}_counts.csv", 
-        quoting=csv.QUOTE_ALL,
-        index=False,
-    )
+        n_tokens = F.count_tokens(texts[i], encoding_name)
+        writer.writerow([ids[i], n_tokens])
+        out_csv.flush()
+        logging.info(f"Data point {ids[i]} has {n_tokens} tokens")
+    out_csv.close()
 
 
 @app.command()
@@ -99,26 +97,21 @@ def complete_prompt(
     texts = list(df["text"])
     ids = list(df["id"])
 
-    # Process texts
-    out_df = df[["id"]].copy()
-    responses = []
-    for i in tqdm(range(len(ids))):
+    # Complete prompt and write results to csv file
+    out_csv = open(f"{outdir}/{data_file_path.stem}_responses.csv", 'a')
+    writer = csv.writer(out_csv)
+    writer.writerow(["id", "response"])
+    for i in tqdm(range(len(texts))):
         n_tokens = F.count_tokens(texts[i], encoding_name)
         if (n_tokens + n_prompt_tokens) > max_token_len:
-            responses.append("TOO_LONG")
+            writer.writerow([ids[i], "TOO_LONG"])
+            logging.warn(f"Data point {ids[i]} not completed")
         else:
-            responses.append(
-                str(F.chat_complete(texts[i], model_name=model_name, prompt=prompt))
-            )
-        logging.info(f"Data point {ids[i]} completed")
-    out_df["response"] = responses
-
-    # Write output
-    out_df.to_csv(
-        f"{outdir}/{data_file_path.stem}_response.csv", 
-        quoting=csv.QUOTE_ALL,
-        index=False,
-    )
+            response = str(F.chat_complete(texts[i], model_name=model_name, prompt=prompt))
+            writer.writerow([ids[i], response])
+            logging.info(f"Data point {ids[i]} completed")
+        out_csv.flush()
+    out_csv.close()
 
 
 if __name__ == "__main__":
