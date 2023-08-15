@@ -1,2 +1,3 @@
 args <- commandArgs(trailingOnly = TRUE)
-print(args)
+cat("R: ")
+print(paste(args))
