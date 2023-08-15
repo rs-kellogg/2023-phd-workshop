@@ -113,6 +113,10 @@ def complete_prompt(
                 F.chat_complete(texts[i], model_name=model_name, prompt=prompt)
             )
             writer.writerow([ids[i], response])
-            logging.info(f"Data point {ids[i]} completed")
+            valid = F.validate_result(response)
+            if valid:
+                logging.info(f"Data point {ids[i]} completed")
+            else:
+                logging.warn(f"Data point {ids[i]} not completed")
         out_csv.flush()
     out_csv.close()

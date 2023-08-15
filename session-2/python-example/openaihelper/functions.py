@@ -50,3 +50,8 @@ def count_tokens(text: str, encoding_name: str) -> int:
     encoding = tiktoken.get_encoding(encoding_name)
     num_tokens = len(encoding.encode(text))
     return num_tokens
+
+
+def validate_result(result: str) -> bool:
+    assert result is not None and len(result) > 0
+    return not result.startswith("InvalidRequestError") and not result.startswith("RateLimitError")
