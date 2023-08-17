@@ -1,3 +1,10 @@
+##############################
+# Running Fe Regs in Parallel
+#############################
+# To run this file please specify the number of cores from the command line
+# For "4" cores: 
+# Rscript my_script.R 4
+
 # Clean environment
 rm(list=ls())
 
@@ -8,11 +15,12 @@ library(fixest)
 library(parallel)
 
 # Set the number of cores to use (adjust as needed)
-num_cores <- 4
+args <- commandArgs(trailingOnly = TRUE)
+num_cores <- as.integer(args[1])  # Specify the number of cores as a command line argument
 
-# Create a subfolder to store results
-results_folder <- paste0("parallel_", format(Sys.Date(), "%Y%m%d"))
-dir.create(results_folder, showWarnings = FALSE)
+#############
+# Simulated Data
+##############
 
 # Simulate a larger dataset with housing price data
 set.seed(123)
@@ -25,6 +33,11 @@ data <- data.table(
   income = rnorm(n * time_periods),
   housing_price = rnorm(n * time_periods, mean = 500000, sd = 100000)
 )
+
+
+###########
+# Functions
+###########
 
 # Function to run fixed effects regression using felm
 run_felm <- function(data) {
@@ -41,9 +54,17 @@ run_feols <- function(data) {
 }
 
 
+############
+# Run
+############
 
 # Split the data into chunks for parallel processing
 chunks <- split(data, 1:num_cores)
+
+# Create a subfolder to store results
+results_folder <- paste0("parallel_R_", format(Sys.Date(), "%Y%m%d"))
+dir.create(results_folder, showWarnings = FALSE)
+
 
 # Parallelize fixed effects estimation using felm
 cluster <- makeCluster(num_cores)
@@ -65,7 +86,6 @@ cores_feols <- paste("feols cores", num_cores, sep=":")
 print(cores_feols)
 stopCluster(cluster)
 
-
 # Combine results from parallel processing
 combined_results_felm <- do.call(rbind, results_felm)
 combined_results_feols <- do.call(rbind, results_feols)
@@ -80,7 +100,6 @@ cat(combined_results_feols)
 sink()
 
 # Save runtime information to a CSV file
-
 runtime_df <- data.frame(
   Run_Time = c(elapse_felm, elapse_feols),
   Cores = c(cores_felm, cores_feols))
@@ -88,3 +107,6 @@ runtime_csv <- file.path(results_folder, "runtime.csv")
 write.csv(runtime_df, file = runtime_csv, row.names = FALSE)
 
 cat("All processing complete.\n")
+
+
+

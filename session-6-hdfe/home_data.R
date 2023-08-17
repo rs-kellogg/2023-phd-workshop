@@ -1,14 +1,37 @@
+##############################
+# Fixed Effect Regressions
+#############################
+# This file applies different fe regressions to the home sales dataset.
+
 # clean 
 rm(list=ls())
 
 # libraries
-
 library(data.table)
 library(lfe)
 library(fixest)
 
+#############
+# Inputs
+##############
+
 # Read a csv file in R
 data <- read.csv('ex_fes_homeprices.csv', header = TRUE, sep = ',')
+
+# Create a data.table to store time details
+time_details <- data.table(Model = character(0), "CPU Time" = numeric(0), "Real Time" = numeric(0))
+
+# Define regression specifications
+regressions <- list(
+  #list(model = "lm", formula = log_sale_price ~ list_fsbo + age_home + new + as.factor(month) + year + as.factor(home_id)),
+  list(model = "felm", formula = log_sale_price ~ list_fsbo + age_home + new + as.factor(month) + year | home_id | 0 | home_id),
+  list(model = "feols", formula = log_sale_price ~ list_fsbo + age_home + new + as.factor(month) + year | home_id)
+)
+
+
+###########
+# Functions
+###########
 
 # Function to create a subfolder and return its path
 create_subfolder <- function(base_folder, folder_name) {
@@ -39,21 +62,17 @@ save_as_text <- function(result, model_name, subfolder_path) {
   capture.output(print(result), file = table_name)
 }
 
-# Define regression specifications
-regressions <- list(
-  #list(model = "lm", formula = log_sale_price ~ list_fsbo + age_home + new + as.factor(month) + year + as.factor(home_id)),
-  list(model = "felm", formula = log_sale_price ~ list_fsbo + age_home + new + as.factor(month) + year | home_id | 0 | home_id),
-  list(model = "feols", formula = log_sale_price ~ list_fsbo + age_home + new + as.factor(month) + year | home_id)
-)
 
-# Create a data.table to store time details
-time_details <- data.table(Model = character(0), "CPU Time" = numeric(0), "Real Time" = numeric(0))
+###########
+# Run
+###########
 
 # Define base folder for subfolders
 base_folder <- getwd()  # Change this to the desired base folder path
 
 # Create a subfolder with the current date or use an existing one
-subfolder <- create_subfolder(base_folder, format(Sys.Date(), "%Y%m%d"))
+subfolder_name <- paste0(format(Sys.Date(), "%Y%m%d"), "_R_results")
+subfolder <- create_subfolder(base_folder, subfolder_name)
 
 # Loop through regressions and run/save results
 for (reg in regressions) {
@@ -82,5 +101,4 @@ for (reg in regressions) {
 # Save time details as a CSV file
 csv_file_name <- file.path(subfolder, paste0("regression_times_", format(Sys.Date(), "%Y%m%d"), ".csv"))
 fwrite(time_details, csv_file_name)
-
 
